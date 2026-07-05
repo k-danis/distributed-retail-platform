@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: native # TODO
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configurations # TODO
+server:
+  port: 8080
