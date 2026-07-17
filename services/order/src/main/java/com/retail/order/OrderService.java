@@ -1,0 +1,75 @@
+package com.retail.order;
+
+import com.retail.customer.CustomerClient;
+import com.retail.exception.BusinessException;
+import com.retail.kafka.OrderConfirmation;
+import com.retail.kafka.OrderProducer;
+import com.retail.orderline.OrderLineRequest;
+import com.retail.orderline.OrderLineService;
+import com.retail.product.ProductClient;
+import com.retail.product.PurchaseRequest;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class OrderService {
+
+    private final CustomerClient customerClient;
+    private final ProductClient productClient;
+    private final OrderRepository repository;
+    private final OrderMapper mapper;
+    private final OrderLineService orderLineService;
+    private final OrderProducer orderProducer;
+
+    public Integer createOrder(@Valid OrderRequest request) {
+        var customer = customerClient.findCustomerById(request.customerId())
+                .orElseThrow(() -> new BusinessException("Cannot create order: no customer with id " + request.customerId()));
+
+        var purchasedProducts = productClient.purchaseProducts(request.products());
+
+        var order = repository.save(mapper.toOrder(request));
+
+        for (PurchaseRequest purchaseRequest : request.products()) {
+            orderLineService.saveOrderLine(
+                    new OrderLineRequest(
+                            null,
+                            order.getId(),
+                            purchaseRequest.productId(),
+                            purchaseRequest.quantity()
+                    )
+            );
+        }
+
+        // TODO payment
+
+        orderProducer.sendOrderConfirmation(
+                new OrderConfirmation(
+                        request.reference(),
+                        request.amount(),
+                        request.paymentMethod(),
+                        customer,
+                        purchasedProducts
+                )
+        );
+
+        return order.getId();
+    }
+
+    public List<OrderResponse> findAll() {
+        return repository.findAll()
+                .stream()
+                .map(mapper::fromOrder)
+                .toList();
+    }
+
+    public OrderResponse findById(Integer orderId) {
+        return repository.findById(orderId)
+                .map(mapper::fromOrder)
+                .orElseThrow(() -> new EntityNotFoundException("No order with id " + orderId));
+    }
+}
