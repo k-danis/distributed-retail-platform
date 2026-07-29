@@ -1,0 +1,41 @@
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+          routes:
+            - id: customer-service
+              uri: lb://CUSTOMER-SERVICE
+              predicates:
+                - Path=/api/v1/customers/**
+            - id: order-service
+              uri: lb://ORDER-SERVICE
+              predicates:
+                - Path=/api/v1/orders/**
+            - id: order-lines-service
+              uri: lb://ORDER-SERVICE
+              predicates:
+                - Path=/api/v1/order-lines/**
+            - id: product-service
+              uri: lb://PRODUCT-SERVICE
+              predicates:
+                - Path=/api/v1/products/**
+            - id: payment-service
+              uri: lb://PAYMENT-SERVICE
+              predicates:
+                - Path=/api/v1/payments/**
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: DEBUG
+#    reactor.netty: DEBUG
+#    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: DEBUG
+#    org.springframework.cloud.gateway.route.RouteDefinitionRepository: DEBUG
+#    org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping: DEBUG
+
+server:
+  port: 8222
