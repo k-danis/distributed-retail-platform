@@ -6,6 +6,8 @@ import com.retail.kafka.OrderConfirmation;
 import com.retail.kafka.OrderProducer;
 import com.retail.orderline.OrderLineRequest;
 import com.retail.orderline.OrderLineService;
+import com.retail.payment.PaymentClient;
+import com.retail.payment.PaymentRequest;
 import com.retail.product.ProductClient;
 import com.retail.product.PurchaseRequest;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,6 +27,7 @@ public class OrderService {
     private final OrderMapper mapper;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     public Integer createOrder(@Valid OrderRequest request) {
         var customer = customerClient.findCustomerById(request.customerId())
@@ -45,7 +48,15 @@ public class OrderService {
             );
         }
 
-        // TODO payment
+        var paymentRequest = new PaymentRequest(
+                request.amount(),
+                request.paymentMethod(),
+                order.getId(),
+                order.getReference(),
+                customer
+        );
+
+        paymentClient.requestOrderPayment(paymentRequest);
 
         orderProducer.sendOrderConfirmation(
                 new OrderConfirmation(
