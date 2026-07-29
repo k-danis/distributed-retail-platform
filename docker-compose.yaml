@@ -96,6 +96,14 @@ services:
       - retail-network
     restart: unless-stopped
 
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    ports:
+      - '9411:9411'
+    networks:
+      - retail-network
+
 networks:
   retail-network:
     driver: bridge
