@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmation</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-body: #f4f4f4;
+            --bg-card: #ffffff;
+            --primary: #007BFF;
+            --text-main: #333333;
+            --text-muted: #555555;
+            --radius: 8px;
+            --shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            --font-main: 'Roboto', Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin: 0.3rem 0;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 15px;
+            color: #fff;
+            background-color: var(--primary);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        .footer {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>Payment Confirmation</h1>
+
+    <p>Dear <span th:text="${customerName}"></span>,</p>
+
+    <p>Your payment of $<span th:text="${amount}"></span> has been successfully processed.</p>
+
+    <p>Order reference: <span th:text="${orderReference}"></span></p>
+
+    <p>Thank you for choosing our service. If you have any questions, feel free to contact us.</p>
+
+    <div class="footer">
+        <p>This is an automated message. Please do not reply to this email.</p>
+    </div>
+</div>
+</body>
+</html>
