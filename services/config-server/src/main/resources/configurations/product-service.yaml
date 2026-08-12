@@ -16,6 +16,11 @@ spring:
     baseline-version: 0
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
+
+springdoc:
+  api-docs:
+    path: /api/v1/products/v3/api-docs
+
 server:
   port: 8050
 

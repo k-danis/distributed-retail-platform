@@ -8,7 +8,10 @@ spring:
     port: 27017
     database: customer
     authentication-database: admin
-#      uri: mongodb://mongo:secret@localhost:27017/customer?authSource=admin
+
+springdoc:
+  api-docs:
+    path: /api/v1/customers/v3/api-docs
 
 server:
   port: 8090

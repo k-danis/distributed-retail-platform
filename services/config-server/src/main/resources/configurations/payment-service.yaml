@@ -17,5 +17,9 @@ spring:
       properties:
         spring.json.type.mapping: paymentConfirmation:com.retail.notification.PaymentNotificationRequest
 
+springdoc:
+  api-docs:
+    path: /api/v1/payments/v3/api-docs
+
 server:
   port: 8060
