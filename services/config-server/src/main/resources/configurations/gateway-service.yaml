@@ -33,14 +33,25 @@ spring:
               predicates:
                 - Path=/api/v1/payments/**
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: customer-service
+        url: /api/v1/customers/v3/api-docs
+      - name: order-service
+        url: /api/v1/orders/v3/api-docs
+      - name: order-lines-service
+        url: /api/v1/order-lines/v3/api-docs
+      - name: product-service
+        url: /api/v1/products/v3/api-docs
+      - name: payment-service
+        url: /api/v1/payments/v3/api-docs
+
 logging:
   level:
     root: INFO
     org.springframework.cloud.gateway: DEBUG
-#    reactor.netty: DEBUG
-#    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: DEBUG
-#    org.springframework.cloud.gateway.route.RouteDefinitionRepository: DEBUG
-#    org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping: DEBUG
 
 server:
   port: 8222
