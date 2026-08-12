@@ -8,5 +8,20 @@ spring:
       server:
         native:
           search-locations: classpath:/configurations # TODO
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,prometheus"
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 server:
   port: 8080
