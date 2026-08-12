@@ -17,6 +17,10 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+springdoc:
+  api-docs:
+    path: /api/v1/orders/v3/api-docs
+
 server:
   port: 8070
 
