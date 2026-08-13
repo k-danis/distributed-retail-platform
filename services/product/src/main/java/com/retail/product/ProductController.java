@@ -1,6 +1,7 @@
 package com.retail.product;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,5 +37,20 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<ProductResponse>> findAll () {
         return ResponseEntity.ok(service.findAll());
+    }
+
+    @DeleteMapping("/{product-id}")
+    public ResponseEntity<Void> deleteProducts (
+            @PathVariable("product-id") @NotNull Integer productId
+    ) {
+        service.deleteProduct(productId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<ProductResponse> updateProducts (
+            @RequestBody @Valid ProductRequest request
+    ) {
+        return ResponseEntity.ok(service.updateProduct(request));
     }
 }

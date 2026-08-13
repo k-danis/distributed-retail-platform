@@ -66,4 +66,24 @@ public class ProductService {
                 .map(mapper::toProductResponse)
                 .toList();
     }
+
+    public void deleteProduct(Integer productId) {
+        repository.deleteById(productId);
+    }
+
+    public ProductResponse updateProduct(@Valid ProductRequest request) {
+        var product = repository.findById(request.id())
+                .orElseThrow(() -> new EntityNotFoundException("Product not found with the ID : " + request.id()));
+        product.setAvailableQuantity(request.availableQuantity());
+        product.setName(request.name());
+        product.setPrice(request.price());
+        product.setDescription(request.description());
+        product.setCategory(
+                Category.builder()
+                        .id(request.categoryId())
+                        .build()
+        );
+
+        return mapper.toProductResponse(repository.save(product));
+    }
 }
