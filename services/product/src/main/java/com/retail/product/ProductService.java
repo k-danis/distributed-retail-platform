@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -14,11 +15,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ProductService {
 
     private final ProductRepository repository;
     private final ProductMapper mapper;
 
+    @Transactional
     public Integer createProduct(@Valid ProductRequest request) {
         var product = mapper.toProduct(request);
         return repository.save(product).getId();
@@ -68,11 +71,13 @@ public class ProductService {
                 .toList();
     }
 
+    @Transactional
     @CacheEvict(value = "products", key = "#productId")
     public void deleteProduct(Integer productId) {
         repository.deleteById(productId);
     }
 
+    @Transactional
     @CacheEvict(value = "products", key = "#request.id()")
     public ProductResponse updateProduct(@Valid ProductRequest request) {
         var product = repository.findById(request.id())
