@@ -18,10 +18,12 @@ public class OrderLineMapper {
                 .build();
     }
 
-    public OrderLineResponse toOrderLineResponse(OrderLineResponse orderLineResponse) {
+    public OrderLineResponse toOrderLineResponse(OrderLine orderLine) {
         return new OrderLineResponse(
-                orderLineResponse.id(),
-                orderLineResponse.quantity()
+                orderLine.getId(),
+                orderLine.getOrder().getId(),
+                orderLine.getProductId(),
+                orderLine.getQuantity()
         );
     }
 }
