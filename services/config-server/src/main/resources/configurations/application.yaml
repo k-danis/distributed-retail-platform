@@ -8,6 +8,9 @@ spring:
   cloud:
     config:
       override-system-properties: false
+  threads:
+    virtual:
+      enabled: true
 
 management:
   tracing:
