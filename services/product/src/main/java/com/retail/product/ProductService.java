@@ -4,6 +4,7 @@ import com.retail.exception.ProductPurchaseException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -67,10 +68,12 @@ public class ProductService {
                 .toList();
     }
 
+    @CacheEvict(value = "products", key = "#productId")
     public void deleteProduct(Integer productId) {
         repository.deleteById(productId);
     }
 
+    @CacheEvict(value = "products", key = "#request.id()")
     public ProductResponse updateProduct(@Valid ProductRequest request) {
         var product = repository.findById(request.id())
                 .orElseThrow(() -> new EntityNotFoundException("Product not found with the ID : " + request.id()));
