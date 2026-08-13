@@ -2,6 +2,7 @@ package com.retail.product;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SoftDelete;
 
 import java.math.BigDecimal;
 
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
+@SoftDelete
 public class Product {
 
     @Id
