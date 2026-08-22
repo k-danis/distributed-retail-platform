@@ -22,12 +22,12 @@ public class ProductService {
     private final ProductMapper mapper;
 
     @Transactional
-    public Integer createProduct(@Valid ProductRequest request) {
+    public Integer create(@Valid ProductRequest request) {
         var product = mapper.toProduct(request);
         return repository.save(product).getId();
     }
 
-    public List<ProductPurchaseResponse> purchaseProducts(@Valid List<ProductPurchaseRequest> request) {
+    public List<ProductPurchaseResponse> purchase(@Valid List<ProductPurchaseRequest> request) {
         var productIds = request.stream()
                 .map(ProductPurchaseRequest::productId)
                 .toList();
@@ -72,14 +72,14 @@ public class ProductService {
     }
 
     @Transactional
-    @CacheEvict(value = "products", key = "#productId")
-    public void deleteProduct(Integer productId) {
-        repository.deleteById(productId);
+    @CacheEvict(value = "products", key = "#id")
+    public void delete(Integer id) {
+        repository.deleteById(id);
     }
 
     @Transactional
     @CacheEvict(value = "products", key = "#request.id()")
-    public ProductResponse updateProduct(@Valid ProductRequest request) {
+    public ProductResponse update(@Valid ProductRequest request) {
         var product = repository.findById(request.id())
                 .orElseThrow(() -> new EntityNotFoundException("Product not found with the ID : " + request.id()));
         product.setAvailableQuantity(request.availableQuantity());
