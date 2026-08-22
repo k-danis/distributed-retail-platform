@@ -13,9 +13,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Customer {
 
     @Id
-    private String id; // TODO
-    private String firstname; // TODO
-    private String lastname; // TODO
+    private String id;
+    private String firstName;
+    private String lastName;
     private String email;
     private Address address;
 }
