@@ -12,48 +12,46 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    // TODO naming of methods (e.g. the word 'Customer', 'get' or 'find')
-
     private final CustomerService service;
 
     @PostMapping
-    public ResponseEntity<String> createCustomer(@RequestBody @Valid CustomerRequest request
+    public ResponseEntity<String> create(@RequestBody @Valid CustomerRequest request
     ) {
-        return ResponseEntity.ok(service.createCustomer(request));
+        return ResponseEntity.ok(service.create(request));
     }
 
     @PutMapping
-    public ResponseEntity<Void> updateCustomer(
+    public ResponseEntity<Void> update(
             @RequestBody @Valid CustomerRequest request
     ) {
-        service.updateCustomer(request);
+        service.update(request);
         return ResponseEntity.accepted().build();
     }
 
     @GetMapping
     public ResponseEntity<List<CustomerResponse>> findAll() {
-        return ResponseEntity.ok(service.findAllCustomers());
+        return ResponseEntity.ok(service.findAll());
     }
 
-    @GetMapping("/exists/{customer-id}")
+    @GetMapping("/exists/{id}")
     public ResponseEntity<Boolean> existsById(
-            @PathVariable("customer-id") String customerId
+            @PathVariable String id
     ) {
-        return ResponseEntity.ok(service.existsById(customerId));
+        return ResponseEntity.ok(service.existsById(id));
     }
 
-    @GetMapping("/{customer-id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CustomerResponse> findById(
-            @PathVariable("customer-id") String customerId
+            @PathVariable String id
     ) {
-        return ResponseEntity.ok(service.findById(customerId));
+        return ResponseEntity.ok(service.findById(id));
     }
 
-    @DeleteMapping("/{customer-id}") // TODO naming
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(
-            @PathVariable("customer-id") String customerId
+            @PathVariable String id
     ) {
-        service.deleteCustomer(customerId);
+        service.deleteCustomer(id);
         return ResponseEntity.accepted().build();
     }
 

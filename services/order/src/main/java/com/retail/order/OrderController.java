@@ -15,10 +15,10 @@ public class OrderController {
     private final OrderService service;
 
     @PostMapping
-    public ResponseEntity<Integer> createOrder(
+    public ResponseEntity<Integer> create(
             @RequestBody @Valid OrderRequest request
     ) {
-        return ResponseEntity.ok(service.createOrder(request));
+        return ResponseEntity.ok(service.create(request));
     }
 
     @GetMapping
@@ -26,10 +26,10 @@ public class OrderController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @GetMapping("/{order-id}")
+    @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> findById(
-            @PathVariable("order-id") Integer orderId
+            @PathVariable Integer id
     ) {
-        return ResponseEntity.ok(service.findById(orderId));
+        return ResponseEntity.ok(service.findById(id));
     }
 }

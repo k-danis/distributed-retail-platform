@@ -35,7 +35,7 @@ public class EmailService {
             String customerName,
             BigDecimal amount,
             String orderReference
-    ) throws MessagingException, MessagingException {
+    ) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper =
                 new MimeMessageHelper(
@@ -75,7 +75,7 @@ public class EmailService {
             BigDecimal amount,
             String orderReference,
             List<Product> products
-    ) throws MessagingException, MessagingException {
+    ) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper =
                 new MimeMessageHelper(

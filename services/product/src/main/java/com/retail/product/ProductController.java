@@ -1,7 +1,6 @@
 package com.retail.product;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,22 +15,22 @@ public class ProductController {
     private final ProductService service;
 
     @PostMapping
-    public ResponseEntity<Integer> createProduct(@RequestBody @Valid ProductRequest request) {
-        return ResponseEntity.ok(service.createProduct(request));
+    public ResponseEntity<Integer> create(@RequestBody @Valid ProductRequest request) {
+        return ResponseEntity.ok(service.create(request));
     }
 
     @PostMapping("/purchase")
-    public ResponseEntity<List<ProductPurchaseResponse>> purchaseProducts (
+    public ResponseEntity<List<ProductPurchaseResponse>> purchase(
             @RequestBody @Valid List<ProductPurchaseRequest> request
     ) {
-        return ResponseEntity.ok(service.purchaseProducts(request));
+        return ResponseEntity.ok(service.purchase(request));
     }
 
-    @GetMapping("/{product-id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ProductResponse> findById (
-            @PathVariable("product-id") Integer productId
+            @PathVariable Integer id
     ) {
-        return ResponseEntity.ok(service.findById(productId));
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @GetMapping
@@ -39,18 +38,18 @@ public class ProductController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @DeleteMapping("/{product-id}")
-    public ResponseEntity<Void> deleteProducts (
-            @PathVariable("product-id") @NotNull Integer productId
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(
+            @PathVariable Integer id
     ) {
-        service.deleteProduct(productId);
+        service.delete(id);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public ResponseEntity<ProductResponse> updateProducts (
+    public ResponseEntity<ProductResponse> update(
             @RequestBody @Valid ProductRequest request
     ) {
-        return ResponseEntity.ok(service.updateProduct(request));
+        return ResponseEntity.ok(service.update(request));
     }
 }

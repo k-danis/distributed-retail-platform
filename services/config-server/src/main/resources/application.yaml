@@ -1,13 +1,13 @@
 spring:
   profiles:
-    active: native # TODO
+    active: native
   application:
     name: config-server
   cloud:
     config:
       server:
         native:
-          search-locations: classpath:/configurations # TODO
+          search-locations: classpath:/configurations
 management:
   endpoints:
     web:

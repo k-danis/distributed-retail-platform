@@ -2,5 +2,5 @@ spring:
   application:
     name: customer-service
   config:
-    import: optional:configserver:http://localhost:8080 #TODO
+    import: optional:configserver:http://localhost:8080
 

@@ -24,7 +24,7 @@ spring:
     properties:
       mail:
         smpt:
-          trust: '*' #TODO
+          trust: '*'
         auth: false
         starttls:
           enabled: true

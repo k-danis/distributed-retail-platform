@@ -32,7 +32,7 @@ public class NotificationConsumer {
                         .build()
         );
 
-        var customerName = paymentConfirmation.customerFirstname() + " " + paymentConfirmation.customerLastname();
+        var customerName = paymentConfirmation.customerFirstName() + " " + paymentConfirmation.customerLastName();
         emailService.sendPaymentSuccessEmail(
                 paymentConfirmation.customerEmail(),
                 customerName,
@@ -52,7 +52,7 @@ public class NotificationConsumer {
                         .build()
         );
 
-        var customerName = orderConfirmation.customer().firstname() + " " + orderConfirmation.customer().lastname();
+        var customerName = orderConfirmation.customer().firstName() + " " + orderConfirmation.customer().lastName();
         emailService.sendOrderConfirmationEmail(
                 orderConfirmation.customer().email(),
                 customerName,
