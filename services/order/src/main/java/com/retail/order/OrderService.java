@@ -29,7 +29,7 @@ public class OrderService {
     private final OrderProducer orderProducer;
     private final PaymentClient paymentClient;
 
-    public Integer createOrder(@Valid OrderRequest request) {
+    public Integer create(@Valid OrderRequest request) {
         var customer = customerClient.findCustomerById(request.customerId())
                 .orElseThrow(() -> new BusinessException("Cannot create order: no customer with id " + request.customerId()));
 
@@ -78,9 +78,9 @@ public class OrderService {
                 .toList();
     }
 
-    public OrderResponse findById(Integer orderId) {
-        return repository.findById(orderId)
+    public OrderResponse findById(Integer id) {
+        return repository.findById(id)
                 .map(mapper::fromOrder)
-                .orElseThrow(() -> new EntityNotFoundException("No order with id " + orderId));
+                .orElseThrow(() -> new EntityNotFoundException("No order with id " + id));
     }
 }
