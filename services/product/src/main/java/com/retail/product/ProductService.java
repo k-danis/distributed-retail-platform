@@ -27,10 +27,18 @@ public class ProductService {
         return repository.save(product).getId();
     }
 
+
+
+    @Transactional
+    @CacheEvict(value = "products", allEntries = true)
     public List<ProductPurchaseResponse> purchase(@Valid List<ProductPurchaseRequest> request) {
         var productIds = request.stream()
                 .map(ProductPurchaseRequest::productId)
                 .toList();
+
+        if (productIds.size() != productIds.stream().distinct().count()) {
+            throw new ProductPurchaseException("Duplicate product IDs in purchase request");
+        }
 
         var storedProducts = repository.findAllByIdInOrderById(productIds);
         if (productIds.size() != storedProducts.size()) {
