@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: product-service
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+
+management:
+  tracing:
+    export:
+      enabled: false
+
+logging:
+  level:
+    org.springframework.cache: TRACE
